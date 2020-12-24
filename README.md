@@ -7,4 +7,4 @@ A PHP script to translate all i18n strings using Google Translate
   <h5><code>fromLanguage</code>Iso language code of the source file. example: en <code>String (Language Code)</h5></code>
   <h5><code>toLanguages</code>Array of destination languages. example: ~/en.json <code>Array (Language Code)</h5></code>
   <h3>Example</h3>
-  <code>php -f translator.php languageFile=~/en.json fromLanguage=en toLanguages[]=fr toLanguages[]=hi ...</code>
+  <code>php -f translator.php languageFile=~/en.json fromLanguage=en toLanguages[]=fr toLanguages[]=hi</code>
