@@ -21,12 +21,11 @@ error_reporting(E_ALL);
     {
        $arr[$mydata] = translate($from, $key, $mydata);
        $arrt[] = $mydata;
-       echo number_format((float)($size / 1000000), 5, '.', '') . " MB " . progress_bar($a, $cc, " $last Bytes, Current Context: $key\n") ;
+       echo number_format((float)($size / 1000000), 5, '.', '') . " MB " . progress_bar($a, $cc, " $last Bytes, Current Language: $key\n") ;
        $a = $a + 1;
     }
     $a = 1;
-    $es = ($key != "hi") ? $key : "in";
-    $es = ($key != "nl") ? $es : "de";
+    $es = $key;
     file_put_contents($es . ".json", json_encode($arr));
     echo "\n\n\n" . $es . ".json Completed Successfully!\n\n\n" ;
   }
