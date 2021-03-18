@@ -7,28 +7,42 @@ error_reporting(E_ALL);
   $a = 1;
   $file = $argv[1];
   $from = $argv[2];
-  $user = json_decode(file_get_contents($file));
+  $user = json_decode(file_get_contents($file), true);
   $cc = 0;
-  foreach($user as $k)
-  {
-     $cc = $cc + 1;
-  }
+  array_map('countItems', $user);
   $langs = explode(',',$argv[3]);
+  $langu = "";
   foreach ($langs as $key) {
     $arr = array();
-    $arrt = array();
-    foreach($user as $mydata)
-    {
-       $arr[$mydata] = translate($from, $key, $mydata);
-       $arrt[] = $mydata;
-       echo number_format((float)($size / 1000000), 5, '.', '') . " MB " . progress_bar($a, $cc, " $last Bytes, Current Language: $key\n") ;
-       $a = $a + 1;
-    }
+    $arrt = array();      
+    $langu = $key;
+    $arr = array_map('test_print', $user);
     $a = 1;
     $es = $key;
     file_put_contents($es . ".json", json_encode($arr));
     echo "\n\n\n" . $es . ".json Completed Successfully!\n\n\n" ;
   }
+  function test_print($item){
+        global $size;
+        global $last;
+        global $a;
+        global $cc;
+        global $langu;
+        global $from;
+        $arr = array();
+        echo number_format((float)($size / 1000000), 5, '.', '') . " MB " . progress_bar($a, $cc, " $last Bytes, Current Context: $item\n") ;
+        $a = $a + 1;
+        if(is_string($item))
+            return translate($from, $langu, $item);
+        else
+            return array_map('test_print', $item);
+    }
+  function countItems($item){
+        global $cc;
+        if(!is_string($item))
+            array_map('countItems', $item);
+        $cc += 1;
+    }
 
   function progress_bar($done, $total, $info="", $width=50) {
     $perc = round(($done * 100) / $total);
